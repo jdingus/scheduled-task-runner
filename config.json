@@ -1,0 +1,25 @@
+{
+    "_comment1": "timestamp format: 'day of the month hour:minute', e.g., '1 23:56' means the 1st day of the month at 23:56",
+    "_comment2": "default: true tasks only run when backup_now.py script is executed",
+    "tasks": [
+      {
+        "src": "C:/example_directory1",
+        "dest": "C:/backup_directory1",
+        "timestamp": "1 23:56",
+        "name": "MD1"
+      },
+      {
+        "src": "C:/example_directory2",
+        "dest": "C:/backup_directory2",
+        "timestamp": "15 12:00",
+        "name": "MD2"
+      },
+      {
+        "src": "C:/example_directory3",
+        "dest": "C:/backup_directory3",
+        "name": "MD3",
+        "default": true
+      }
+    ]
+  }
+  

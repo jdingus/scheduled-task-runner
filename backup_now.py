@@ -20,10 +20,12 @@ def main():
         if task.get("default"):
             src = task["src"]
             dest = task["dest"]
+            task_name = task.get("name", "")
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            filename = f"{timestamp} {task_name}.zip" if task_name else f"{timestamp}.zip"
             temp_dir = os.path.join(dest, f"{timestamp}_temp")
             copy_directory(src, temp_dir)
-            zip_directory(temp_dir, os.path.join(dest, f"{timestamp}.zip"))
+            zip_directory(temp_dir, os.path.join(dest, filename))
             shutil.rmtree(temp_dir)
             break
 

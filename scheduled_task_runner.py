@@ -34,16 +34,16 @@ def main():
     while True:
         current_timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        for task_id, task in enumerate(config["tasks"]):
-            task_timestamp = f'{task["day_of_month"]} {task["time"]}'
-            if task_timestamp == current_timestamp:
+        for task in config["tasks"]:
+            if task["timestamp"] == current_timestamp:
                 src = task["src"]
                 dest = task["dest"]
+                task_name = task.get("name", "")
+                filename = f"{current_timestamp} {task_name}.zip" if task_name else f"{current_timestamp}.zip"
                 temp_dir = os.path.join(dest, f"{current_timestamp}_temp")
                 copy_directory(src, temp_dir)
-                zip_directory(temp_dir, os.path.join(dest, f"{current_timestamp}.zip"))
+                zip_directory(temp_dir, os.path.join(dest, filename))
                 shutil.rmtree(temp_dir)
-                log_execution(task_id, current_timestamp)
 
         time.sleep(30)
 
