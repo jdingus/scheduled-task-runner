@@ -1,0 +1,26 @@
+{
+    "tasks": [
+      {
+        "id": 1,
+        "name": "MD1",
+        "timestamp": "2023-04-01_23-56-00",
+        "src": "/path/to/source/directory1",
+        "dest": "/path/to/destination/directory1"
+      },
+      {
+        "id": 2,
+        "name": "MD2",
+        "timestamp": "2023-04-15_12-00-00",
+        "src": "/path/to/source/directory2",
+        "dest": "/path/to/destination/directory2"
+      },
+      {
+        "id": 3,
+        "default": true,
+        "src": "/path/to/source/directory3",
+        "dest": "/path/to/destination/directory3"
+      }
+    ],
+    "missed_task_threshold": 5
+  }
+  
