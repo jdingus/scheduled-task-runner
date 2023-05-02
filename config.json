@@ -1,24 +1,27 @@
 {
     "_comment1": "timestamp format: 'day of the month hour:minute', e.g., '1 23:56' means the 1st day of the month at 23:56",
     "_comment2": "default: true tasks only run when backup_now.py script is executed",
+    "missed_task_threshold": 5,
     "tasks": [
       {
-        "src": "C:/example_directory1",
-        "dest": "C:/backup_directory1",
-        "timestamp": "1 23:56",
-        "name": "MD1"
+        "id": 1,
+        "name": "MD1",
+        "timestamp": "2023-04-01_23-56-00",
+        "src": "/path/to/source/directory1",
+        "dest": "/path/to/destination/directory1"
       },
       {
-        "src": "C:/example_directory2",
-        "dest": "C:/backup_directory2",
-        "timestamp": "15 12:00",
-        "name": "MD2"
+        "id": 2,
+        "name": "MD2",
+        "timestamp": "2023-04-15_12-00-00",
+        "src": "/path/to/source/directory2",
+        "dest": "/path/to/destination/directory2"
       },
       {
-        "src": "C:/example_directory3",
-        "dest": "C:/backup_directory3",
-        "name": "MD3",
-        "default": true
+        "id": 3,
+        "default": true,
+        "src": "/path/to/source/directory3",
+        "dest": "/path/to/destination/directory3"
       }
     ]
   }

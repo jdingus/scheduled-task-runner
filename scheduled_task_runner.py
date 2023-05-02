@@ -4,8 +4,10 @@ from datetime import datetime
 import time
 import logging
 from logging.handlers import RotatingFileHandler
-from task_utils import copy_directory, zip_directory, load_config
 import json
+
+from task_utils import copy_directory, zip_directory, load_config, read_executed_tasks, save_executed_tasks, check_missed_tasks
+
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -29,6 +31,7 @@ def log_execution(task_id, timestamp):
         json.dump(executed_tasks, f)
 
 def main():
+    logger.info("Program started")
     config = load_config()
 
     while True:
@@ -36,14 +39,22 @@ def main():
 
         for task in config["tasks"]:
             if task["timestamp"] == current_timestamp:
+                task_name = task.get("name", "")
+                logger.info(f"Waiting for next task '{task_name}' at {task['timestamp']}")
+                
                 src = task["src"]
                 dest = task["dest"]
                 task_name = task.get("name", "")
                 filename = f"{current_timestamp} {task_name}.zip" if task_name else f"{current_timestamp}.zip"
                 temp_dir = os.path.join(dest, f"{current_timestamp}_temp")
                 copy_directory(src, temp_dir)
-                zip_directory(temp_dir, os.path.join(dest, filename))
+
+                zip_directory(temp_dir, os.path.join(dest, f"{current_timestamp} {task_name}.zip"))
                 shutil.rmtree(temp_dir)
+
+                executed_tasks = read_executed_tasks()
+                executed_tasks.append({"task": task, "timestamp": current_timestamp})
+                save_executed_tasks(executed_tasks)
 
         time.sleep(30)
 
