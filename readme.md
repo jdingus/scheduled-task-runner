@@ -1,65 +1,49 @@
 # Scheduled Task Runner
 
-This application is designed to automate the backup of directories by executing tasks according to a predefined schedule, configured in the `config.json` file.
+This Python script is designed to run tasks on a list of specified recurring day of the month and time. The task parameters are stored in a human-readable and easily configurable JSON file. Additionally, it records task executions in a JSON file that can be checked for historical records.
 
-## Dependencies
-This script uses Python 3.6 or later, and has no external dependencies.
+## Files in this project
 
-## Features
+1. scheduled_task_runner.py: The main script that runs tasks based on the config.json file.
+2. backup_now.py: A script that can be manually run to execute the default task specified in the config.json file.
+3. task_utils.py: A utility module containing functions used by scheduled_task_runner.py and backup_now.py.
+4. config.json: The configuration file containing tasks and their parameters.
+5. executed_tasks.json: A file storing successful task executions.
+6. scheduled_task_runner.log: A log file that records task execution information and errors.
+7. scheduled_task_runner.bat: A Windows batch file to run scheduled_task_runner.py.
+8. backup_now.bat: A Windows batch file to run backup_now.py.
 
-- Scheduled directory backup based on defined timestamps
-- Reoccurring monthly task execution
-- Backup triggered by running a separate script (backup_now.py)
-- Missed task execution check on startup with configurable time limit
-- JSON configuration file for easy task customization
-- Execution history stored in executed_tasks.json
-- Comprehensive logging with log rotation
-- Remote triggering of default task via an HTTP server
-- Windows batch files for easy script execution
+## How to set up the config.json file
 
-## Configuration
+The config.json file contains an array of tasks, where each task is an object with the following properties:
 
-The `config.json` file stores the configuration for the scheduled tasks. Each task has the following properties:
+1. "day_of_month": The day of the month on which the task should be executed (1-31).
+2. "time": The time of the day when the task should be executed, formatted as "HH:MM".
+3. "src": The source directory to be backed up.
+4. "dest": The destination directory where the backup will be stored.
+5. "default": (Optional) A boolean value indicating if the task is the default task to be executed by backup_now.py.
 
-- `name`: (optional) A human-readable name for the task
-- `src`: The source directory to be backed up
-- `dest`: The destination directory for the backup
-- `timestamp`: The timestamp for when the task should be executed (e.g., "1 23:56" for the 1st day of each month at 23:56)
-- `default`: (optional) Set to `true` for tasks that should be executed when running `backup_now.py`
+Example of config.json:
 
-Example `config.json`:
-
-```json
 {
   "tasks": [
     {
-      "name": "MD1",
-      "src": "C:/source_directory",
-      "dest": "C:/backup_directory",
-      "timestamp": "1 23:56"
+      "day_of_month": 1,
+      "time": "23:56",
+      "src": "C:/source_directory_1",
+      "dest": "C:/destination_directory_1"
     },
     {
-      "name": "MD15",
-      "src": "C:/source_directory2",
-      "dest": "C:/backup_directory2",
-      "timestamp": "15 12:00"
-    },
-    {
-      "name": "Default Task",
-      "src": "C:/default_src",
-      "dest": "C:/default_dest",
+      "day_of_month": 15,
+      "time": "12:00",
+      "src": "C:/source_directory_2",
+      "dest": "C:/destination_directory_2",
       "default": true
     }
-  ],
-  "missed_task_days": 5
+  ]
 }
 
-## Usage
-1. Update the config.json file with the tasks you want to schedule.
-2. Run scheduled_task_runner.bat to start the scheduled task runner.
-3. Run backup_now.bat to immediately execute the default task defined in the config.json file.
-4. Run http_server.bat to start the HTTP server for remote triggering of the default task.
-5. To remotely trigger the default task, use an HTTP client (like curl) to send a POST request to the HTTP server: curl -X POST http://IP_ADDRESS:PORT/trigger
+## How to run the scripts
 
-## Logging
-The application logs its actions and errors to the scheduled_task_runner.log file, which has log rotation to prevent it from growing too large.
+1. scheduled_task_runner.py: Double-click the scheduled_task_runner.bat file or run it from the command prompt.
+2. backup_now.py: Double-click the backup_now.bat file or run it from the command prompt.

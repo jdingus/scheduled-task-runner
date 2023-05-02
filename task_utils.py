@@ -11,6 +11,23 @@ def load_config():
     with open('config.json', 'r') as f:
         return json.load(f)
 
+def copy_directory(src, dest, retries=3, wait_time=60):
+    for i in range(retries):
+        try:
+            shutil.copytree(src, dest)
+            logger.info(f"Successfully copied directory from {src} to {dest}")
+            return
+        except shutil.Error as e:
+            logger.warning(f"Error copying directory from {src} to {dest}: {e}")
+        except OSError as e:
+            logger.warning(f"Error copying directory from {src} to {dest}: {e}")
+        
+        if i < retries - 1:
+            logger.info(f"Retrying copy operation in {wait_time} seconds...")
+            time.sleep(wait_time)
+
+    logger.error(f"Failed to copy directory from {src} to {dest} after {retries} attempts")
+
 def read_executed_tasks():
     with open('executed_tasks.json', 'r') as f:
         return json.load(f)
@@ -18,15 +35,6 @@ def read_executed_tasks():
 def save_executed_tasks(executed_tasks):
     with open('executed_tasks.json', 'w') as f:
         json.dump(executed_tasks, f, indent=2)
-
-def copy_directory(src, dest):
-    try:
-        shutil.copytree(src, dest)
-        logger.info(f"Successfully copied directory from {src} to {dest}")
-    except shutil.Error as e:
-        logger.error(f"Error copying directory from {src} to {dest}: {e}")
-    except OSError as e:
-        logger.error(f"Error copying directory from {src} to {dest}: {e}")
 
 def zip_directory(src, dest):
     try:
