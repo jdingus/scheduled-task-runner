@@ -35,28 +35,20 @@ def main():
     config = load_config()
 
     while True:
-        current_timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        now = datetime.now()
+        current_day_of_month = now.day
+        current_time = now.strftime("%H:%M")
 
         for task in config["tasks"]:
-            if task["timestamp"] == current_timestamp:
+            task_day_of_month = task["day_of_month"]
+            task_time = task["time"]
+
+            if task_day_of_month == current_day_of_month and task_time == current_time:
                 task_name = task.get("name", "")
-                logger.info(f"Waiting for next task '{task_name}' at {task['timestamp']}")
+                logger.info(f"Waiting for next task '{task_name}' at {task['time']}")
                 
                 src = task["src"]
                 dest = task["dest"]
                 task_name = task.get("name", "")
-                filename = f"{current_timestamp} {task_name}.zip" if task_name else f"{current_timestamp}.zip"
-                temp_dir = os.path.join(dest, f"{current_timestamp}_temp")
-                copy_directory(src, temp_dir)
-
-                zip_directory(temp_dir, os.path.join(dest, f"{current_timestamp} {task_name}.zip"))
-                shutil.rmtree(temp_dir)
-
-                executed_tasks = read_executed_tasks()
-                executed_tasks.append({"task": task, "timestamp": current_timestamp})
-                save_executed_tasks(executed_tasks)
-
-        time.sleep(30)
-
-if __name__ == "__main__":
-    main()
+                timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                filename = f"{timestamp} {task_name}.zip
