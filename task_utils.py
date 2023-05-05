@@ -30,8 +30,17 @@ def copy_directory(src, dest, retries=3, wait_time=60):
     logger.error(f"Failed to copy directory from {src} to {dest} after {retries} attempts")
 
 def read_executed_tasks():
-    with open('executed_tasks.json', 'r') as f:
-        return json.load(f)
+    executed_tasks_file = "executed_tasks.json"
+
+    if not os.path.exists(executed_tasks_file):
+        with open(executed_tasks_file, "w") as f:
+            json.dump({"executed": []}, f)
+
+    with open(executed_tasks_file, "r") as f:
+        executed_tasks = json.load(f)
+
+    return executed_tasks
+
 
 def save_executed_tasks(executed_tasks):
     with open('executed_tasks.json', 'w') as f:

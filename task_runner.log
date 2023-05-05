@@ -7,3 +7,10 @@
 2023-05-05 11:26:08,128 - logger_config - WARNING - Error copying directory from C:\Code\test_backup to C:\Code\backup\2023-05-05_11-24-08_temp: [WinError 3] The system cannot find the path specified: 'C:\\Code\\test_backup'
 2023-05-05 11:26:08,129 - logger_config - ERROR - Failed to copy directory from C:\Code\test_backup to C:\Code\backup\2023-05-05_11-24-08_temp after 3 attempts
 2023-05-05 11:26:08,133 - logger_config - INFO - Successfully zipped directory C:\Code\backup\2023-05-05_11-24-08_temp to C:\Code\backup\2023-05-05_11-24-08 MD1.zip
+2023-05-05 11:28:31,516 - logger_config - INFO - Program started
+2023-05-05 11:29:01,548 - logger_config - INFO - Executing task 'MD1' at 11:29
+2023-05-05 11:29:01,549 - logger_config - ERROR - Source directory 'C:\Code\test_backup' does not exist. Skipping task 'MD1'.
+2023-05-05 11:29:01,550 - logger_config - INFO - Task 'MD1' completed successfully
+2023-05-05 11:32:01,663 - logger_config - INFO - Executing task 'MD1' at 11:32
+2023-05-05 11:32:02,170 - logger_config - INFO - Successfully copied directory from C:\Code\test_backup to C:\Code\backup\2023-05-05_11-32-01_temp
+2023-05-05 11:32:02,615 - logger_config - INFO - Successfully zipped directory C:\Code\backup\2023-05-05_11-32-01_temp to C:\Code\backup\2023-05-05_11-32-01 MD1.zip
