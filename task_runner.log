@@ -20,3 +20,21 @@
 2023-05-05 11:36:10,312 - logger_config - INFO - Successfully zipped directory C:\Code\backup\2023-05-05_11-36-09_temp to C:\Code\backup\2023-05-05_11-36-09 MD1.zip
 2023-05-05 11:36:10,337 - logger_config - INFO - Task 'MD1' completed successfully
 2023-05-05 11:38:19,978 - logger_config - INFO - Program started
+2023-05-05 11:51:44,760 - logger_config - INFO - Checking for missed tasks
+2023-05-05 11:51:44,802 - logger_config - INFO - Program started
+2023-05-05 11:53:14,743 - logger_config - INFO - Checking for missed tasks
+2023-05-05 11:53:14,749 - logger_config - INFO - Program started
+2023-05-05 11:55:19,844 - logger_config - INFO - Checking for missed tasks
+2023-05-05 11:55:19,851 - logger_config - INFO - Program started
+2023-05-05 11:56:59,049 - logger_config - INFO - Checking for missed tasks
+2023-05-05 11:56:59,055 - logger_config - INFO - Program started
+2023-05-05 12:00:07,926 - logger_config - INFO - Checking for missed tasks
+2023-05-05 12:00:07,962 - logger_config - INFO - Program started
+2023-05-05 12:00:07,963 - logger_config - INFO - Executing task 'MD1' at 12:00
+2023-05-05 12:00:08,423 - logger_config - INFO - Successfully copied directory from C:\Code\test_backup to C:\Code\backup\2023-05-05_12-00-07_temp
+2023-05-05 12:00:08,808 - logger_config - INFO - Successfully zipped directory C:\Code\backup\2023-05-05_12-00-07_temp to C:\Code\backup\2023-05-05_12-00-07 MD1.zip
+2023-05-05 12:00:08,826 - logger_config - INFO - Task 'MD1' completed successfully
+2023-05-05 12:07:13,874 - logger_config - INFO - Checking for missed tasks
+2023-05-05 12:07:13,880 - logger_config - INFO - Program started
+2023-05-05 12:08:29,893 - logger_config - INFO - Checking for missed tasks
+2023-05-05 12:08:29,899 - logger_config - INFO - Program started

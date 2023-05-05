@@ -58,21 +58,28 @@ def zip_directory(src, dest):
 
 def get_missed_tasks(config):
     executed_tasks = read_executed_tasks()
-    executed_task_ids = {task["task"]["id"] for task in executed_tasks["executed"]}
-    missed_tasks = []
     now = datetime.now()
     missed_task_threshold = config.get("missed_task_threshold", 0)
+    missed_tasks = []
 
     for task in config["tasks"]:
         task_id = task["id"]
-        if task_id not in executed_task_ids:
-            task_day_of_month = task["day_of_month"]
-            task_time = datetime.strptime(task["time"], "%H:%M").time()
-            task_datetime = datetime(now.year, now.month, task_day_of_month, task_time.hour, task_time.minute)
-            days_since_task = (now - task_datetime).days
+        task_day_of_month = task["day_of_month"]
+        task_time = datetime.strptime(task["time"], "%H:%M").time()
+        task_datetime = datetime(now.year, now.month, task_day_of_month, task_time.hour, task_time.minute)
 
+        executed_task_dates = [datetime.strptime(task_exec["timestamp"], "%Y-%m-%d_%H-%M-%S") for task_exec in executed_tasks["executed"] if task_exec["task"]["id"] == task_id]
+
+        if not executed_task_dates:
+            days_since_task = (now - task_datetime).days
             if days_since_task >= missed_task_threshold:
+                missed_tasks.append(task)
+        else:
+            latest_executed_date = max(executed_task_dates)
+            days_since_last_execution = (now - latest_executed_date).days
+            if days_since_last_execution >= missed_task_threshold:
                 missed_tasks.append(task)
 
     return missed_tasks
+
 

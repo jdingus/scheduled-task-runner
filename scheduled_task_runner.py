@@ -7,7 +7,7 @@ from logger_config import main_logger as logger
 import json
 import shutil
 
-from task_utils import copy_directory, zip_directory, load_config, read_executed_tasks, save_executed_tasks, check_missed_tasks
+from task_utils import copy_directory, zip_directory, load_config, read_executed_tasks, save_executed_tasks, get_missed_tasks
 
 
 
