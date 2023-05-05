@@ -28,14 +28,14 @@ def execute_task(task):
     shutil.rmtree(temp_dir)
 
     executed_tasks = read_executed_tasks()
-    executed_tasks["executed"].append({"task": task, "timestamp": timestamp})  # Fix here
+    executed_tasks["executed"].append({"task": task, "timestamp": timestamp})
     save_executed_tasks(executed_tasks)
 
 def main():
     logger.info("Program started")
-    config = load_config()
 
     while True:
+        config = load_config()  # Reload the config file in each iteration
         now = datetime.now()
         current_day_of_month = now.day
         current_time = now.strftime("%H:%M")
