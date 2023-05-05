@@ -56,30 +56,34 @@ def zip_directory(src, dest):
     except Exception as e:
         logger.error(f"Error zipping directory {src} to {dest}: {e}")
 
-def get_missed_tasks(config):
-    executed_tasks = read_executed_tasks()
+def get_missed_tasks(config, executed_tasks_data):
     now = datetime.now()
     missed_task_threshold = config.get("missed_task_threshold", 0)
     missed_tasks = []
 
+    # Sort the executed_tasks list based on the timestamp
+    executed_tasks_sorted = sorted(
+        executed_tasks_data["executed"], key=lambda x: x["timestamp"], reverse=True
+    )
+
+    executed_task_dict = {}
+    for executed_task in executed_tasks_sorted:
+        task_id = executed_task["task_id"]
+        executed_time = datetime.strptime(executed_task["timestamp"], "%Y-%m-%d_%H-%M-%S")
+        if task_id not in executed_task_dict:
+            executed_task_dict[task_id] = executed_time
+
     for task in config["tasks"]:
         task_id = task["id"]
-        task_day_of_month = task["day_of_month"]
-        task_time = datetime.strptime(task["time"], "%H:%M").time()
-        task_datetime = datetime(now.year, now.month, task_day_of_month, task_time.hour, task_time.minute)
+        last_executed = executed_task_dict.get(task_id, None)
 
-        executed_task_dates = [datetime.strptime(task_exec["timestamp"], "%Y-%m-%d_%H-%M-%S") for task_exec in executed_tasks["executed"] if task_exec["task"]["id"] == task_id]
-
-        if not executed_task_dates:
-            days_since_task = (now - task_datetime).days
-            if days_since_task >= missed_task_threshold:
-                missed_tasks.append(task)
-        else:
-            latest_executed_date = max(executed_task_dates)
-            days_since_last_execution = (now - latest_executed_date).days
-            if days_since_last_execution >= missed_task_threshold:
-                missed_tasks.append(task)
+        if last_executed is None or (now - last_executed).days > missed_task_threshold:
+            missed_tasks.append(task)
 
     return missed_tasks
+
+
+
+
 
 

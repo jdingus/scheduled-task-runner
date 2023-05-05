@@ -1,26 +1,12 @@
 {
   "executed": [
     {
-      "task": {
-        "id": 1,
-        "name": "MD1",
-        "day_of_month": 5,
-        "time": "11:59",
-        "src": "C:\\Code\\test_backup",
-        "dest": "C:\\Code\\backup"
-      },
-      "timestamp": "2023-05-05_11-36-09"
+      "task_id": 2,
+      "timestamp": "2023-05-05_16-04-54"
     },
     {
-      "task": {
-        "id": 1,
-        "name": "MD1",
-        "day_of_month": 5,
-        "time": "12:00",
-        "src": "C:\\Code\\test_backup",
-        "dest": "C:\\Code\\backup"
-      },
-      "timestamp": "2023-05-05_12-00-07"
+      "task_id": 1,
+      "timestamp": "2023-05-05_16-05-35"
     }
   ]
 }

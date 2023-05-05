@@ -2,7 +2,7 @@ import os
 import sys
 from datetime import datetime
 import time
-import logging
+
 from logger_config import main_logger as logger
 
 import json
@@ -32,8 +32,9 @@ def main():
         shutil.rmtree(temp_dir)
 
         executed_tasks = read_executed_tasks()
-        executed_tasks["executed"].append({"task": default_task, "timestamp": timestamp})  # Fix here
+        executed_tasks["executed"].append({"task_id": default_task["id"], "timestamp": timestamp})
         save_executed_tasks(executed_tasks)
+        logger.info(f"Task '{task_name}' (ID: {default_task['id']}) executed successfully")
     else:
         logger.warning("No default task found")
 
