@@ -1,26 +1,49 @@
 {
-    "executed": [
-      {
-        "task_name": "MD1",
-        "src": "C:\\source_directory_path1",
-        "dest": "C:\\destination_directory_path1",
-        "timestamp": "1 23:56",
-        "execution_time": "2023-05-01_23-56-30"
+  "executed": [
+    {
+      "task_name": "MD1",
+      "src": "C:\\source_directory_path1",
+      "dest": "C:\\destination_directory_path1",
+      "timestamp": "1 23:56",
+      "execution_time": "2023-05-01_23-56-30"
+    },
+    {
+      "task_name": "MD2",
+      "src": "C:\\source_directory_path2",
+      "dest": "C:\\destination_directory_path2",
+      "timestamp": "15 12:00",
+      "execution_time": "2023-05-15_12-00-15"
+    },
+    {
+      "task_name": "MD1",
+      "src": "C:\\source_directory_path1",
+      "dest": "C:\\destination_directory_path1",
+      "timestamp": "1 23:56",
+      "execution_time": "2023-06-01_23-56-10"
+    },
+    {
+      "task": {
+        "id": 2,
+        "name": "MD2",
+        "default": true,
+        "day_of_month": 1,
+        "time": "23:56",
+        "src": "/Users/josh/code/data",
+        "dest": "/Users/josh/code/backup"
       },
-      {
-        "task_name": "MD2",
-        "src": "C:\\source_directory_path2",
-        "dest": "C:\\destination_directory_path2",
-        "timestamp": "15 12:00",
-        "execution_time": "2023-05-15_12-00-15"
+      "timestamp": "2023-05-04_22-32-49"
+    },
+    {
+      "task": {
+        "id": 2,
+        "name": "MD2",
+        "default": true,
+        "day_of_month": 1,
+        "time": "23:56",
+        "src": "/Users/josh/code/data",
+        "dest": "/Users/josh/code/backup"
       },
-      {
-        "task_name": "MD1",
-        "src": "C:\\source_directory_path1",
-        "dest": "C:\\destination_directory_path1",
-        "timestamp": "1 23:56",
-        "execution_time": "2023-06-01_23-56-10"
-      }
-    ]
-  }
-  
+      "timestamp": "2023-05-04_22-36-36"
+    }
+  ]
+}

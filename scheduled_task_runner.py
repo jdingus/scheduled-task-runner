@@ -51,4 +51,4 @@ def main():
                 dest = task["dest"]
                 task_name = task.get("name", "")
                 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                filename = f"{timestamp} {task_name}.zip
+                filename = f"{timestamp} {task_name}.zip"
