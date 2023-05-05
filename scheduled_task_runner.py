@@ -38,10 +38,12 @@ def main():
         now = datetime.now()
         current_day_of_month = now.day
         current_time = now.strftime("%H:%M")
+        print(current_time)
 
         for task in config["tasks"]:
             task_day_of_month = task["day_of_month"]
             task_time = task["time"]
+            print(task_time)
 
             if task_day_of_month == current_day_of_month and task_time == current_time:
                 task_name = task.get("name", "")
@@ -52,3 +54,7 @@ def main():
                 task_name = task.get("name", "")
                 timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
                 filename = f"{timestamp} {task_name}.zip"
+        time.sleep(10)
+                
+if __name__ == "__main__":
+    main()

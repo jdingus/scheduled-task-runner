@@ -6,10 +6,10 @@
     {
       "id": 1,
       "name": "MD1",
-      "day_of_month": 4,
-      "time": "22:06",
-      "src": "/path/to/source/directory1",
-      "dest": "/path/to/destination/directory1"
+      "day_of_month": 5,
+      "time": "10:48",
+      "src": "C:\\Code\\test_backup",
+      "dest": "C:\\Code\\backup"
     },
     {
       "id": 2,
@@ -17,14 +17,9 @@
       "default": true,
       "day_of_month": 1,
       "time": "23:56",
-      "src": "/Users/josh/code/data",
-      "dest": "/Users/josh/code/backup"
-    },
-    {
-      "id": 3,
-      "default": false,
-      "src": "/path/to/source/directory3",
-      "dest": "/path/to/destination/directory3"
+      "src": "C:\\Code\\test_backup",
+      "dest": "C:\\Code\\backup"
     }
+
   ]
 }

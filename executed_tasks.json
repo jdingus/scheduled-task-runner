@@ -44,6 +44,30 @@
         "dest": "/Users/josh/code/backup"
       },
       "timestamp": "2023-05-04_22-36-36"
+    },
+    {
+      "task": {
+        "id": 2,
+        "name": "MD2",
+        "default": true,
+        "day_of_month": 1,
+        "time": "23:56",
+        "src": "C:\\Code\\test_backup",
+        "dest": "C:\\Code\\backup"
+      },
+      "timestamp": "2023-05-05_10-41-14"
+    },
+    {
+      "task": {
+        "id": 2,
+        "name": "MD2",
+        "default": true,
+        "day_of_month": 1,
+        "time": "23:56",
+        "src": "C:\\Code\\test_backup",
+        "dest": "C:\\Code\\backup"
+      },
+      "timestamp": "2023-05-05_10-41-25"
     }
   ]
 }
