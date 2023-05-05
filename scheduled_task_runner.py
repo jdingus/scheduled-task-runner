@@ -3,19 +3,13 @@ import sys
 from datetime import datetime
 import time
 import logging
-from logging.handlers import RotatingFileHandler
+from logger_config import main_logger as logger
 import json
 import shutil
 
 from task_utils import copy_directory, zip_directory, load_config, read_executed_tasks, save_executed_tasks, check_missed_tasks
 
-# Configure logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-handler = RotatingFileHandler("scheduled_task_runner.log", maxBytes=10*1024*1024, backupCount=3)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+
 
 def execute_task(task):
     src = task["src"]
@@ -23,13 +17,22 @@ def execute_task(task):
     task_name = task.get("name", "")
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     temp_dir = os.path.join(dest, f"{timestamp}_temp")
-    copy_directory(src, temp_dir)
-    zip_directory(temp_dir, os.path.join(dest, f"{timestamp} {task_name}.zip"))
-    shutil.rmtree(temp_dir)
+    
+    if not os.path.exists(src):
+        logger.error(f"Source directory '{src}' does not exist. Skipping task '{task_name}'.")
+        return
+
+    try:
+        copy_directory(src, temp_dir)
+        zip_directory(temp_dir, os.path.join(dest, f"{timestamp} {task_name}.zip"))
+        shutil.rmtree(temp_dir)
+    except Exception as e:
+        logger.error(f"Failed to execute task '{task_name}': {e}")
 
     executed_tasks = read_executed_tasks()
     executed_tasks["executed"].append({"task": task, "timestamp": timestamp})
     save_executed_tasks(executed_tasks)
+
 
 def main():
     logger.info("Program started")

@@ -3,19 +3,12 @@ import sys
 from datetime import datetime
 import time
 import logging
-from logging.handlers import RotatingFileHandler
+from logger_config import main_logger as logger
+
 import json
 import shutil
 
 from task_utils import copy_directory, zip_directory, load_config, read_executed_tasks, save_executed_tasks
-
-# Configure logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-handler = RotatingFileHandler("backup_now.log", maxBytes=10*1024*1024, backupCount=3)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-logger.addHandler(handler)
 
 def main():
     logger.info("Backup Now started")

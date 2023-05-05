@@ -3,10 +3,10 @@ import shutil
 import zipfile
 import json
 import logging
+from logger_config import main_logger as logger
+
 from datetime import datetime, timedelta
 import time
-
-logger = logging.getLogger(__name__)
 
 def load_config():
     with open('config.json', 'r') as f:

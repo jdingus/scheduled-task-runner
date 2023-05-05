@@ -1,0 +1,9 @@
+2023-05-05 11:22:58,012 - logger_config - INFO - Program started
+2023-05-05 11:24:08,102 - logger_config - INFO - Executing task 'MD1' at 11:24
+2023-05-05 11:24:08,103 - logger_config - WARNING - Error copying directory from C:\Code\test_backup to C:\Code\backup\2023-05-05_11-24-08_temp: [WinError 3] The system cannot find the path specified: 'C:\\Code\\test_backup'
+2023-05-05 11:24:08,104 - logger_config - INFO - Retrying copy operation in 60 seconds...
+2023-05-05 11:25:08,119 - logger_config - WARNING - Error copying directory from C:\Code\test_backup to C:\Code\backup\2023-05-05_11-24-08_temp: [WinError 3] The system cannot find the path specified: 'C:\\Code\\test_backup'
+2023-05-05 11:25:08,120 - logger_config - INFO - Retrying copy operation in 60 seconds...
+2023-05-05 11:26:08,128 - logger_config - WARNING - Error copying directory from C:\Code\test_backup to C:\Code\backup\2023-05-05_11-24-08_temp: [WinError 3] The system cannot find the path specified: 'C:\\Code\\test_backup'
+2023-05-05 11:26:08,129 - logger_config - ERROR - Failed to copy directory from C:\Code\test_backup to C:\Code\backup\2023-05-05_11-24-08_temp after 3 attempts
+2023-05-05 11:26:08,133 - logger_config - INFO - Successfully zipped directory C:\Code\backup\2023-05-05_11-24-08_temp to C:\Code\backup\2023-05-05_11-24-08 MD1.zip
