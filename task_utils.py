@@ -56,27 +56,23 @@ def zip_directory(src, dest):
     except Exception as e:
         logger.error(f"Error zipping directory {src} to {dest}: {e}")
 
-def check_missed_tasks(config):
+def get_missed_tasks(config):
     executed_tasks = read_executed_tasks()
-    executed_task_ids = [task["id"] for task in executed_tasks]
+    executed_task_ids = {task["task"]["id"] for task in executed_tasks["executed"]}
+    missed_tasks = []
+    now = datetime.now()
+    missed_task_threshold = config.get("missed_task_threshold", 0)
 
     for task in config["tasks"]:
         task_id = task["id"]
-
         if task_id not in executed_task_ids:
-            task_time = datetime.strptime(task["timestamp"], "%Y-%m-%d_%H-%M-%S")
-            now = datetime.now()
+            task_day_of_month = task["day_of_month"]
+            task_time = datetime.strptime(task["time"], "%H:%M").time()
+            task_datetime = datetime(now.year, now.month, task_day_of_month, task_time.hour, task_time.minute)
+            days_since_task = (now - task_datetime).days
 
-            if (now - task_time).days <= config["missed_task_threshold"]:
-                logger.warning(f"Missed task '{task.get('name', '')}', executing now")
+            if days_since_task >= missed_task_threshold:
+                missed_tasks.append(task)
 
-                src = task["src"]
-                dest = task["dest"]
-                timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-                temp_dir = os.path.join(dest, f"{timestamp}_temp")
-                copy_directory(src, temp_dir)
-                zip_directory(temp_dir, os.path.join(dest, f"{timestamp} {task.get('name', '')}.zip"))
-                shutil.rmtree(temp_dir)
+    return missed_tasks
 
-                executed_tasks.append({"task": task, "timestamp": timestamp})
-                save_executed_tasks(executed_tasks)

@@ -56,4 +56,12 @@ def main():
         time.sleep(10)
 
 if __name__ == "__main__":
+    logger.info("Checking for missed tasks")
+    config = load_config()
+    missed_tasks = get_missed_tasks(config)
+    for task in missed_tasks:
+        logger.info(f"Executing missed task '{task.get('name', '')}' scheduled for day {task['day_of_month']} at {task['time']}")
+        execute_task(task)
+
     main()
+
