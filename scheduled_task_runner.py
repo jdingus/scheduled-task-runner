@@ -1,10 +1,7 @@
 import os
-import sys
-from datetime import datetime, timedelta
-import shutil
+from datetime import datetime
 import time
-import logging
-from logging.handlers import RotatingFileHandler
+import shutil
 
 from task_utils import (
     copy_directory,
@@ -12,60 +9,80 @@ from task_utils import (
     load_config,
     read_executed_tasks,
     save_executed_tasks,
-    get_missed_tasks,
+    check_missed_tasks,
 )
 
-# Configure logging
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-handler = RotatingFileHandler("scheduled_task_runner.log", maxBytes=10 * 1024 * 1024, backupCount=3)
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-handler.setFormatter(formatter)
-logger.addHandler(handler)
+from logger_config import main_logger as logger
 
 
-def execute_task(task):
+def execute_task(task, current_timestamp):
     src = task["src"]
     dest = task["dest"]
     task_name = task.get("name", "")
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    temp_dir = os.path.join(dest, f"{timestamp}_temp")
+    filename = (
+        f"{current_timestamp} {task_name}.zip"
+        if task_name
+        else f"{current_timestamp}.zip"
+    )
+    temp_dir = os.path.join(dest, f"{current_timestamp}_temp")
     copy_directory(src, temp_dir)
-    zip_directory(temp_dir, os.path.join(dest, f"{timestamp} {task_name}.zip"))
+
+    zip_directory(temp_dir, os.path.join(dest, f"{current_timestamp} {task_name}.zip"))
     shutil.rmtree(temp_dir)
 
     executed_tasks = read_executed_tasks()
-    executed_tasks["executed"].append({"task_id": task["id"], "timestamp": timestamp})
+    executed_time = current_timestamp.strftime("%Y-%m-%d_%H-%M-%S")
+    executed_tasks["executed"].append({"task": task, "executed_time": executed_time})
     save_executed_tasks(executed_tasks)
     logger.info(f"Task '{task_name}' (ID: {task['id']}) executed successfully")
 
 
+def run_missed_tasks(config, current_timestamp):
+    executed_tasks = read_executed_tasks()
+    logger.debug(f"executed_tasks : {executed_tasks}")
+    missed_tasks = check_missed_tasks(config, executed_tasks)
+    logger.debug(f"missed_tasks : {missed_tasks}")
+
+    for task in missed_tasks:
+        logger.info(f"Executing missed task '{task['name']}' (ID: {task['id']})")
+        execute_task(task, current_timestamp)
+
+        # Update executed_tasks with the executed missed task
+        executed_time = current_timestamp.strftime("%Y-%m-%d_%H-%M-%S")
+        executed_tasks["executed"].append(
+            {"task": task, "executed_time": executed_time}
+        )
+        save_executed_tasks(executed_tasks)
+
+
 def main():
-    logger.info("Program started")
+    logger.info(f"****Program started****")
     config = load_config()
+    logger.info("Check for and run any missed tasks...")
+    run_missed_tasks(config, datetime.now())
 
     while True:
-        now = datetime.now()
-        current_day_of_month = now.day
-        current_time = now.strftime("%H:%M")
-
-        executed_tasks = read_executed_tasks()
-        missed_tasks = get_missed_tasks(config, executed_tasks)
-        
-
-        for task in missed_tasks:
-            print(task)
-            logger.info(f"Executing missed task '{task['name']}' (ID: {task['id']})")
-            execute_task(task)
+        current_timestamp = datetime.now()
+        logger.debug(f"starting next loop: {current_timestamp}")
+        current_day = current_timestamp.strftime("%d")
+        current_time = current_timestamp.strftime("%H:%M")
 
         for task in config["tasks"]:
-            task_day_of_month = task["day_of_month"]
-            task_time = task["time"]
-
-            if task_day_of_month == current_day_of_month and task_time == current_time:
-                logger.info(f"Executing scheduled task '{task['name']}' (ID: {task['id']}) at {task['time']}")
-                execute_task(task)
-
+            if not "default" in task:
+                logger.debug(
+                    f"Evaluating for task time and date match....{current_day} {current_time}"
+                )
+                if (task["time"] == current_time) and (
+                    task["day_of_month"] == int(current_day)
+                ):
+                    task_name = task.get("name", "")
+                    logger.info(
+                        f"{task_name} scheduled to run on this day at {task['time']} has been triggered to run..."
+                    )
+                    execute_task(task, current_timestamp)
+                else:
+                    logger.debug(f"No match for task : {task}")
+        logger.debug("sleeping till next check for task run time check...")
         time.sleep(60)
 
 

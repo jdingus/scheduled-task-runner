@@ -1,25 +1,31 @@
 {
-  "_comment1": "timestamp format: 'day of the month hour:minute', e.g., '1 23:56' means the 1st day of the month at 23:56",
-  "_comment2": "default: true tasks only run when backup_now.py script is executed",
-  "missed_task_threshold": 5,
-  "tasks": [
-    {
-      "id": 1,
-      "name": "MD1",
-      "day_of_month": 5,
-      "time": "15:19",
-      "src": "C:\\Code\\test_backup",
-      "dest": "C:\\Code\\backup"
-    },
-    {
-      "id": 2,
-      "name": "MD2",
-      "default": true,
-      "day_of_month": 1,
-      "time": "23:56",
-      "src": "C:\\Code\\test_backup",
-      "dest": "C:\\Code\\backup"
-    }
-
-  ]
-}
+    "_comment1": "timestamp format: 'day of the month hour:minute', e.g., '1 23:56' means the 1st day of the month at 23:56",
+    "_comment2": "default: true tasks only run when backup_now.py script is executed",
+    "missed_task_threshold": 1,
+    "tasks": [
+      {
+        "id": 1,
+        "name": "MD1",
+        "day_of_month": 13,
+        "time": "10:00",
+        "src": "/Users/josh/code/data",
+        "dest": "/Users/josh/code/backup"
+      },
+      {
+        "id": 2,
+        "name": "MD2",
+        "day_of_month": 8,
+        "time": "23:56",
+        "src": "/Users/josh/code/data",
+        "dest": "/Users/josh/code/backup"
+      },
+      {
+        "id": 3,
+        "name": "MD1",
+        "default": true,
+        "src": "/path/to/source/directory3",
+        "dest": "/path/to/destination/directory3"
+      }
+    ]
+  }
+  

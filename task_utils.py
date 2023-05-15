@@ -1,13 +1,10 @@
-import os
-import shutil
-import zipfile
 import json
-import logging
+import os
+from datetime import datetime
+import zipfile
+
 from logger_config import main_logger as logger
-
-from datetime import datetime, timedelta
-import time
-
+import shutil
 def load_config():
     with open('config.json', 'r') as f:
         return json.load(f)
@@ -38,9 +35,7 @@ def read_executed_tasks():
 
     with open(executed_tasks_file, "r") as f:
         executed_tasks = json.load(f)
-
     return executed_tasks
-
 
 def save_executed_tasks(executed_tasks):
     with open('executed_tasks.json', 'w') as f:
@@ -56,34 +51,41 @@ def zip_directory(src, dest):
     except Exception as e:
         logger.error(f"Error zipping directory {src} to {dest}: {e}")
 
-def get_missed_tasks(config, executed_tasks_data):
-    now = datetime.now()
-    missed_task_threshold = config.get("missed_task_threshold", 0)
+def check_missed_tasks(config, executed_tasks):
     missed_tasks = []
-
-    # Sort the executed_tasks list based on the timestamp
-    executed_tasks_sorted = sorted(
-        executed_tasks_data["executed"], key=lambda x: x["timestamp"], reverse=True
-    )
-
-    executed_task_dict = {}
-    for executed_task in executed_tasks_sorted:
-        task_id = executed_task["task_id"]
-        executed_time = datetime.strptime(executed_task["timestamp"], "%Y-%m-%d_%H-%M-%S")
-        if task_id not in executed_task_dict:
-            executed_task_dict[task_id] = executed_time
+    current_timestamp = datetime.now()
+    logger.debug(f"Current timestamp: {current_timestamp}")
 
     for task in config["tasks"]:
-        task_id = task["id"]
-        last_executed = executed_task_dict.get(task_id, None)
+        logger.debug(f"Checking task with ID {task['id']}")
+        if task.get("default"):
+            logger.debug(f"Task {task['id']} is a default task, skipping.")
+            continue
 
-        if last_executed is None or (now - last_executed).days > missed_task_threshold:
+        day_of_month = int(task["day_of_month"])
+        task_time = datetime.strptime(task["time"], "%H:%M").time()
+        task_datetime = datetime(current_timestamp.year, current_timestamp.month, day_of_month, task_time.hour, task_time.minute)
+
+        if task_datetime > current_timestamp:
+            logger.debug(f"Task {task['id']} is scheduled for the future, skipping.")
+            continue
+
+        last_executed_timestamp = None
+        for executed_task in executed_tasks["executed"]:
+            if executed_task["task"]["id"] == task["id"]:
+                executed_time = datetime.strptime(executed_task["executed_time"], "%Y-%m-%d_%H-%M-%S")
+                last_executed_timestamp = executed_time
+                logger.debug(f"Found last executed timestamp for task {task['id']}: {last_executed_timestamp}")
+
+        time_diff = None
+        if last_executed_timestamp:
+            time_diff = current_timestamp - last_executed_timestamp
+            time_diff_days = time_diff.days
+
+            if time_diff_days >= config["missed_task_threshold"]:
+                missed_tasks.append(task)
+                logger.info(f"Task {task['id']} is missed, has not be executed for {time_diff_days} days, which is greater than the {config['missed_task_threshold']} day threshold.")
+        else:
             missed_tasks.append(task)
-
+            logger.info(f"Task {task['id']} has never been executed, adding to the list.")
     return missed_tasks
-
-
-
-
-
-
