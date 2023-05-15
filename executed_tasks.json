@@ -1,0 +1,26 @@
+{
+  "executed": [
+    {
+      "task": {
+        "id": 1,
+        "name": "MD1",
+        "day_of_month": 13,
+        "time": "10:00",
+        "src": "/Users/josh/code/data",
+        "dest": "/Users/josh/code/backup"
+      },
+      "executed_time": "2023-05-15_06-39-40"
+    },
+    {
+      "task": {
+        "id": 2,
+        "name": "MD2",
+        "day_of_month": 8,
+        "time": "23:56",
+        "src": "/Users/josh/code/data",
+        "dest": "/Users/josh/code/backup"
+      },
+      "executed_time": "2023-05-15_06-39-40"
+    }
+  ]
+}

@@ -8,7 +8,14 @@ from logger_config import main_logger as logger
 import json
 import shutil
 
-from task_utils import copy_directory, zip_directory, load_config, read_executed_tasks, save_executed_tasks
+from task_utils import (
+    copy_directory,
+    zip_directory,
+    load_config,
+    read_executed_tasks,
+    save_executed_tasks,
+)
+
 
 def main():
     logger.info("Backup Now started")
@@ -32,11 +39,16 @@ def main():
         shutil.rmtree(temp_dir)
 
         executed_tasks = read_executed_tasks()
-        executed_tasks["executed"].append({"task_id": default_task["id"], "timestamp": timestamp})
+        executed_tasks["executed"].append(
+            {"task_id": default_task["id"], "timestamp": timestamp}
+        )
         save_executed_tasks(executed_tasks)
-        logger.info(f"Task '{task_name}' (ID: {default_task['id']}) executed successfully")
+        logger.info(
+            f"Task '{task_name}' (ID: {default_task['id']}) executed successfully"
+        )
     else:
         logger.warning("No default task found")
+
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,42 @@
+2023-05-15 06:39:40,241 - logger_config - INFO - ****Program started****
+2023-05-15 06:39:40,242 - logger_config - INFO - Check for and run any missed tasks...
+2023-05-15 06:39:40,242 - logger_config - DEBUG - executed_tasks : {'executed': []}
+2023-05-15 06:39:40,242 - logger_config - DEBUG - Current timestamp: 2023-05-15 06:39:40.242957
+2023-05-15 06:39:40,243 - logger_config - DEBUG - Checking task with ID 1
+2023-05-15 06:39:40,248 - logger_config - INFO - Task 1 has never been executed, adding to the list.
+2023-05-15 06:39:40,248 - logger_config - DEBUG - Checking task with ID 2
+2023-05-15 06:39:40,248 - logger_config - INFO - Task 2 has never been executed, adding to the list.
+2023-05-15 06:39:40,248 - logger_config - DEBUG - Checking task with ID 3
+2023-05-15 06:39:40,248 - logger_config - DEBUG - Task 3 is a default task, skipping.
+2023-05-15 06:39:40,248 - logger_config - DEBUG - missed_tasks : [{'id': 1, 'name': 'MD1', 'day_of_month': 13, 'time': '10:00', 'src': '/Users/josh/code/data', 'dest': '/Users/josh/code/backup'}, {'id': 2, 'name': 'MD2', 'day_of_month': 8, 'time': '23:56', 'src': '/Users/josh/code/data', 'dest': '/Users/josh/code/backup'}]
+2023-05-15 06:39:40,248 - logger_config - INFO - Executing missed task 'MD1' (ID: 1)
+2023-05-15 06:39:40,251 - logger_config - INFO - Successfully copied directory from /Users/josh/code/data to /Users/josh/code/backup/2023-05-15 06:39:40.242247_temp
+2023-05-15 06:39:40,252 - logger_config - INFO - Successfully zipped directory /Users/josh/code/backup/2023-05-15 06:39:40.242247_temp to /Users/josh/code/backup/2023-05-15 06:39:40.242247 MD1.zip
+2023-05-15 06:39:40,253 - logger_config - INFO - Task 'MD1' (ID: 1) executed successfully
+2023-05-15 06:39:40,254 - logger_config - INFO - Executing missed task 'MD2' (ID: 2)
+2023-05-15 06:39:40,254 - logger_config - INFO - Successfully copied directory from /Users/josh/code/data to /Users/josh/code/backup/2023-05-15 06:39:40.242247_temp
+2023-05-15 06:39:40,255 - logger_config - INFO - Successfully zipped directory /Users/josh/code/backup/2023-05-15 06:39:40.242247_temp to /Users/josh/code/backup/2023-05-15 06:39:40.242247 MD2.zip
+2023-05-15 06:39:40,255 - logger_config - INFO - Task 'MD2' (ID: 2) executed successfully
+2023-05-15 06:39:40,256 - logger_config - DEBUG - starting next loop: 2023-05-15 06:39:40.256197
+2023-05-15 06:39:40,256 - logger_config - DEBUG - Evaluating for task time and date match....15 06:39
+2023-05-15 06:39:40,256 - logger_config - DEBUG - No match for task : {'id': 1, 'name': 'MD1', 'day_of_month': 13, 'time': '10:00', 'src': '/Users/josh/code/data', 'dest': '/Users/josh/code/backup'}
+2023-05-15 06:39:40,256 - logger_config - DEBUG - Evaluating for task time and date match....15 06:39
+2023-05-15 06:39:40,256 - logger_config - DEBUG - No match for task : {'id': 2, 'name': 'MD2', 'day_of_month': 8, 'time': '23:56', 'src': '/Users/josh/code/data', 'dest': '/Users/josh/code/backup'}
+2023-05-15 06:39:40,256 - logger_config - DEBUG - sleeping till next check for task run time check...
+2023-05-15 06:40:10,927 - logger_config - INFO - ****Program started****
+2023-05-15 06:40:10,928 - logger_config - INFO - Check for and run any missed tasks...
+2023-05-15 06:40:10,928 - logger_config - DEBUG - executed_tasks : {'executed': [{'task': {'id': 1, 'name': 'MD1', 'day_of_month': 13, 'time': '10:00', 'src': '/Users/josh/code/data', 'dest': '/Users/josh/code/backup'}, 'executed_time': '2023-05-15_06-39-40'}, {'task': {'id': 2, 'name': 'MD2', 'day_of_month': 8, 'time': '23:56', 'src': '/Users/josh/code/data', 'dest': '/Users/josh/code/backup'}, 'executed_time': '2023-05-15_06-39-40'}]}
+2023-05-15 06:40:10,928 - logger_config - DEBUG - Current timestamp: 2023-05-15 06:40:10.928612
+2023-05-15 06:40:10,928 - logger_config - DEBUG - Checking task with ID 1
+2023-05-15 06:40:10,931 - logger_config - DEBUG - Found last executed timestamp for task 1: 2023-05-15 06:39:40
+2023-05-15 06:40:10,931 - logger_config - DEBUG - Checking task with ID 2
+2023-05-15 06:40:10,931 - logger_config - DEBUG - Found last executed timestamp for task 2: 2023-05-15 06:39:40
+2023-05-15 06:40:10,931 - logger_config - DEBUG - Checking task with ID 3
+2023-05-15 06:40:10,931 - logger_config - DEBUG - Task 3 is a default task, skipping.
+2023-05-15 06:40:10,932 - logger_config - DEBUG - missed_tasks : []
+2023-05-15 06:40:10,932 - logger_config - DEBUG - starting next loop: 2023-05-15 06:40:10.932051
+2023-05-15 06:40:10,932 - logger_config - DEBUG - Evaluating for task time and date match....15 06:40
+2023-05-15 06:40:10,932 - logger_config - DEBUG - No match for task : {'id': 1, 'name': 'MD1', 'day_of_month': 13, 'time': '10:00', 'src': '/Users/josh/code/data', 'dest': '/Users/josh/code/backup'}
+2023-05-15 06:40:10,932 - logger_config - DEBUG - Evaluating for task time and date match....15 06:40
+2023-05-15 06:40:10,932 - logger_config - DEBUG - No match for task : {'id': 2, 'name': 'MD2', 'day_of_month': 8, 'time': '23:56', 'src': '/Users/josh/code/data', 'dest': '/Users/josh/code/backup'}
+2023-05-15 06:40:10,932 - logger_config - DEBUG - sleeping till next check for task run time check...
